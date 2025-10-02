@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATRIX INTERFACE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="glitch" data-text="MATRIX PROTOCOL">MATRIX PROTOCOL</h1>
+            <p class="subtitle">NEURAL INTERFACE ACTIVE</p>
+        </div>
+        
+        <div class="code-display">
+            <div class="code-line">
+                <span class="line-number">001:</span>
+                <span class="code">INITIALIZING MATRIX CONNECTION...</span>
+            </div>
+            <div class="code-line">
+                <span class="line-number">002:</span>
+                <span class="code">LOADING NEURAL PATHWAYS...</span>
+            </div>
+            <div class="code-line">
+                <span class="line-number">003:</span>
+                <span class="code">ESTABLISHING QUANTUM LINK...</span>
+            </div>
+            <div class="code-line hidden-flag">
+                <span class="line-number">004:</span>
+                <span class="code">// FLAG: CTF{follow_the_white_rabbit}</span>
+            </div>
+            <div class="code-line">
+                <span class="line-number">005:</span>
+                <span class="code">CONNECTION ESTABLISHED</span>
+            </div>
+        </div>
+        
+        <div class="control-panel">
+            <div class="panel-section">
+                <h3>SYSTEM STATUS</h3>
+                <div class="status-item">
+                    <span class="status-label">CPU:</span>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 78%"></div>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">MEMORY:</span>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 92%"></div>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">NETWORK:</span>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3>MATRIX NODES</h3>
+                <div class="node-grid">
+                    <div class="node active"></div>
+                    <div class="node"></div>
+                    <div class="node active"></div>
+                    <div class="node"></div>
+                    <div class="node active"></div>
+                    <div class="node active"></div>
+                    <div class="node"></div>
+                    <div class="node active"></div>
+                    <div class="node"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="neural.html" class="nav-link">NEURAL INTERFACE</a>
+            <a href="quantum.html" class="nav-link">QUANTUM CORE</a>
+        </div>
+        
+        <div class="footer">
+            <p>REALITY IS AN ILLUSION</p>
+            <p class="blink">WAKE UP, NEO...</p>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable developer tools
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // Matrix rain effect
+        function createMatrixRain() {
+            const canvas = document.createElement('canvas');
+            canvas.style.position = 'fixed';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.zIndex = '-1';
+            canvas.style.pointerEvents = 'none';
+            document.body.appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const charArray = chars.split('');
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+            
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ff00';
+                ctx.font = fontSize + 'px monospace';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            
+            setInterval(draw, 35);
+        }
+        
+        createMatrixRain();
+    </script>
+</body>
+</html>

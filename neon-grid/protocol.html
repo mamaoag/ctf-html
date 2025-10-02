@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOL LAYER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="header-section">
+            <h1 class="neon-title">PROTOCOL LAYER</h1>
+            <p class="system-status">COMMUNICATION STACK ANALYSIS</p>
+        </div>
+
+        <div class="protocol-stack">
+            <div class="layer application" onclick="toggleLayer('application')">
+                <div class="layer-header">
+                    <h3>APPLICATION LAYER</h3>
+                    <span class="layer-status active">ACTIVE</span>
+                </div>
+                <div class="layer-content">
+                    <div class="protocol-item">HTTP/HTTPS</div>
+                    <div class="protocol-item">FTP/SFTP</div>
+                    <div class="protocol-item">SSH</div>
+                    <div class="protocol-item">SMTP</div>
+                </div>
+            </div>
+
+            <div class="layer transport" onclick="toggleLayer('transport')">
+                <div class="layer-header">
+                    <h3>TRANSPORT LAYER</h3>
+                    <span class="layer-status active">ACTIVE</span>
+                </div>
+                <div class="layer-content">
+                    <div class="protocol-item">TCP</div>
+                    <div class="protocol-item">UDP</div>
+                    <div class="protocol-item">SCTP</div>
+                </div>
+            </div>
+
+            <div class="layer network" onclick="toggleLayer('network')">
+                <div class="layer-header">
+                    <h3>NETWORK LAYER</h3>
+                    <span class="layer-status active">ACTIVE</span>
+                </div>
+                <div class="layer-content">
+                    <div class="protocol-item">IPv4</div>
+                    <div class="protocol-item">IPv6</div>
+                    <div class="protocol-item">ICMP</div>
+                    <div class="protocol-item">OSPF</div>
+                </div>
+            </div>
+
+            <div class="layer datalink" onclick="toggleLayer('datalink')">
+                <div class="layer-header">
+                    <h3>DATA LINK LAYER</h3>
+                    <span class="layer-status active">ACTIVE</span>
+                </div>
+                <div class="layer-content">
+                    <div class="protocol-item">ETHERNET</div>
+                    <div class="protocol-item">WiFi (802.11)</div>
+                    <div class="protocol-item">PPP</div>
+                </div>
+            </div>
+
+            <div class="layer physical" onclick="toggleLayer('physical')">
+                <div class="layer-header">
+                    <h3>PHYSICAL LAYER</h3>
+                    <span class="layer-status active">ACTIVE</span>
+                </div>
+                <div class="layer-content">
+                    <div class="protocol-item">FIBER OPTIC</div>
+                    <div class="protocol-item">COPPER WIRE</div>
+                    <div class="protocol-item">WIRELESS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="protocol-analyzer">
+            <div class="traffic-monitor">
+                <h3>TRAFFIC MONITOR</h3>
+                <div class="traffic-graph">
+                    <canvas id="trafficCanvas" width="400" height="200"></canvas>
+                </div>
+                <div class="traffic-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">PACKETS/SEC:</span>
+                        <span class="stat-value" id="packets-per-sec">1,247</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">BANDWIDTH:</span>
+                        <span class="stat-value" id="bandwidth">85.3 Mbps</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">LATENCY:</span>
+                        <span class="stat-value" id="latency">12ms</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="security-monitor">
+                <h3>SECURITY ANALYSIS</h3>
+                <div class="security-alerts">
+                    <div class="alert low">
+                        <span class="alert-type">INFO</span>
+                        <span class="alert-message">Normal traffic pattern detected</span>
+                    </div>
+                    <div class="alert medium">
+                        <span class="alert-type">WARN</span>
+                        <span class="alert-message">Unusual port scan activity</span>
+                    </div>
+                    <div class="alert high hidden-alert" onclick="revealFlag(this)">
+                        <span class="alert-type">CRIT</span>
+                        <span class="alert-message">Encrypted payload intercepted</span>
+                        <span class="hidden-flag">CTF{protocol_analysis_complete}</span>
+                    </div>
+                </div>
+
+                <div class="encryption-status">
+                    <h4>ENCRYPTION STATUS</h4>
+                    <div class="encryption-item">
+                        <span class="cipher-name">AES-256-GCM</span>
+                        <span class="cipher-status active">ACTIVE</span>
+                    </div>
+                    <div class="encryption-item">
+                        <span class="cipher-name">RSA-4096</span>
+                        <span class="cipher-status active">ACTIVE</span>
+                    </div>
+                    <div class="encryption-item">
+                        <span class="cipher-name">ECDH-P384</span>
+                        <span class="cipher-status active">ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="packet-forge">
+            <h3>PACKET FORGE</h3>
+            <div class="forge-interface">
+                <div class="forge-controls">
+                    <div class="control-group">
+                        <label>SOURCE IP:</label>
+                        <input type="text" id="src-ip" value="192.168.1.100" />
+                    </div>
+                    <div class="control-group">
+                        <label>DEST IP:</label>
+                        <input type="text" id="dest-ip" value="192.168.1.101" />
+                    </div>
+                    <div class="control-group">
+                        <label>PROTOCOL:</label>
+                        <select id="protocol">
+                            <option value="tcp">TCP</option>
+                            <option value="udp">UDP</option>
+                            <option value="icmp">ICMP</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>PAYLOAD:</label>
+                        <textarea id="payload" placeholder="Enter packet payload..."></textarea>
+                    </div>
+                </div>
+                <button onclick="forgePacket()" class="forge-btn">FORGE PACKET</button>
+            </div>
+            <div id="forge-result" class="forge-result">
+                <p>Configure packet parameters and click forge...</p>
+            </div>
+        </div>
+
+        <div class="grid-navigation">
+            <a href="index.html" class="grid-nav-btn">MAIN GRID</a>
+            <a href="network.html" class="grid-nav-btn">NETWORK NODES</a>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable F12, Ctrl+Shift+I, Ctrl+U
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        function toggleLayer(layerName) {
+            const layer = document.querySelector(`.layer.${layerName}`);
+            const content = layer.querySelector('.layer-content');
+            const status = layer.querySelector('.layer-status');
+
+            layer.classList.toggle('expanded');
+
+            if (layer.classList.contains('expanded')) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                content.style.maxHeight = '0';
+            }
+        }
+
+        function revealFlag(alertElement) {
+            const hiddenFlag = alertElement.querySelector('.hidden-flag');
+            if (hiddenFlag) {
+                hiddenFlag.style.display = 'inline';
+                hiddenFlag.style.color = '#ffff00';
+                hiddenFlag.style.fontWeight = 'bold';
+                alertElement.style.background = 'rgba(255, 255, 0, 0.1)';
+            }
+        }
+
+        function forgePacket() {
+            const srcIp = document.getElementById('src-ip').value;
+            const destIp = document.getElementById('dest-ip').value;
+            const protocol = document.getElementById('protocol').value.toUpperCase();
+            const payload = document.getElementById('payload').value;
+            const resultDiv = document.getElementById('forge-result');
+
+            if (payload.toLowerCase().includes('flag') || payload.toLowerCase().includes('ctf')) {
+                resultDiv.innerHTML = `
+                    <div class="packet-forged">
+                        <h4>PACKET FORGED SUCCESSFULLY</h4>
+                        <p><strong>Source:</strong> ${srcIp}</p>
+                        <p><strong>Destination:</strong> ${destIp}</p>
+                        <p><strong>Protocol:</strong> ${protocol}</p>
+                        <p><strong>Payload Size:</strong> ${payload.length} bytes</p>
+                        <p class="flag-discovered">FLAG DETECTED IN PAYLOAD: <span class="flag-value">CTF{packet_forge_master}</span></p>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="packet-forged">
+                        <h4>PACKET FORGED SUCCESSFULLY</h4>
+                        <p><strong>Source:</strong> ${srcIp}</p>
+                        <p><strong>Destination:</strong> ${destIp}</p>
+                        <p><strong>Protocol:</strong> ${protocol}</p>
+                        <p><strong>Payload Size:</strong> ${payload.length} bytes</p>
+                        <p><strong>Status:</strong> Ready for transmission</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Traffic graph animation
+        function drawTrafficGraph() {
+            const canvas = document.getElementById('trafficCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw grid
+            ctx.strokeStyle = '#00ffff';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < width; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < height; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(width, i);
+                ctx.stroke();
+            }
+
+            // Draw traffic line
+            ctx.strokeStyle = '#00ff00';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            const points = 50;
+            for (let i = 0; i < points; i++) {
+                const x = (i / points) * width;
+                const y = height - (Math.sin(i * 0.2 + Date.now() * 0.01) * 50 + 100);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+
+        // Update traffic stats
+        function updateStats() {
+            const packetsElement = document.getElementById('packets-per-sec');
+            const bandwidthElement = document.getElementById('bandwidth');
+            const latencyElement = document.getElementById('latency');
+
+            const packets = Math.floor(Math.random() * 500) + 1000;
+            const bandwidth = (Math.random() * 20 + 70).toFixed(1);
+            const latency = Math.floor(Math.random() * 10) + 8;
+
+            packetsElement.textContent = packets.toLocaleString();
+            bandwidthElement.textContent = `${bandwidth} Mbps`;
+            latencyElement.textContent = `${latency}ms`;
+        }
+
+        // Animation loops
+        setInterval(drawTrafficGraph, 100);
+        setInterval(updateStats, 2000);
+
+        // Reveal hidden alert after some time
+        setTimeout(() => {
+            document.querySelector('.hidden-alert').style.display = 'flex';
+        }, 5000);
+
+        // Initialize
+        drawTrafficGraph();
+    </script>
+</body>
+
+</html>

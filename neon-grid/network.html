@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NETWORK NODES</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grid-container">
+        <div class="header-section">
+            <h1 class="neon-title">NETWORK NODES</h1>
+            <p class="system-status">DISTRIBUTED COMPUTING MATRIX</p>
+        </div>
+        
+        <div class="network-topology">
+            <div class="topology-map">
+                <div class="network-node primary" data-node="alpha" onclick="selectNode('alpha')">
+                    <span class="node-label">ALPHA</span>
+                    <div class="node-status online"></div>
+                </div>
+                <div class="network-node secondary" data-node="beta" onclick="selectNode('beta')">
+                    <span class="node-label">BETA</span>
+                    <div class="node-status online"></div>
+                </div>
+                <div class="network-node secondary" data-node="gamma" onclick="selectNode('gamma')">
+                    <span class="node-label">GAMMA</span>
+                    <div class="node-status offline"></div>
+                </div>
+                <div class="network-node tertiary" data-node="delta" onclick="selectNode('delta')">
+                    <span class="node-label">DELTA</span>
+                    <div class="node-status online"></div>
+                </div>
+                <div class="network-node tertiary" data-node="epsilon" onclick="selectNode('epsilon')">
+                    <span class="node-label">EPSILON</span>
+                    <div class="node-status maintenance"></div>
+                </div>
+                <div class="network-node hidden-node" data-node="omega" onclick="selectNode('omega')">
+                    <span class="node-label">OMEGA</span>
+                    <div class="node-status secure"></div>
+                </div>
+                
+                <!-- Connection lines -->
+                <svg class="connection-lines">
+                    <line x1="150" y1="100" x2="300" y2="150" class="connection active"></line>
+                    <line x1="150" y1="100" x2="300" y2="250" class="connection active"></line>
+                    <line x1="300" y1="150" x2="450" y2="100" class="connection inactive"></line>
+                    <line x1="300" y1="250" x2="450" y2="200" class="connection active"></line>
+                    <line x1="450" y1="100" x2="600" y2="150" class="connection active"></line>
+                    <line x1="450" y1="200" x2="600" y2="250" class="connection maintenance"></line>
+                    <line x1="400" y1="350" x2="500" y2="300" class="connection secure"></line>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="node-details">
+            <div class="details-panel">
+                <h3>NODE INFORMATION</h3>
+                <div id="node-info">
+                    <p>Select a node to view details...</p>
+                </div>
+            </div>
+            
+            <div class="packet-analyzer">
+                <h3>PACKET ANALYSIS</h3>
+                <div class="packet-stream">
+                    <div class="packet" onclick="inspectPacket(this)">
+                        <span class="packet-id">PKT-001</span>
+                        <span class="packet-type">DATA</span>
+                        <span class="packet-size">1024B</span>
+                    </div>
+                    <div class="packet" onclick="inspectPacket(this)">
+                        <span class="packet-id">PKT-002</span>
+                        <span class="packet-type">CTRL</span>
+                        <span class="packet-size">64B</span>
+                    </div>
+                    <div class="packet encrypted" onclick="inspectPacket(this)">
+                        <span class="packet-id">PKT-003</span>
+                        <span class="packet-type">ENCR</span>
+                        <span class="packet-size">2048B</span>
+                        <span class="hidden-payload">CTF{network_packet_decoded}</span>
+                    </div>
+                    <div class="packet" onclick="inspectPacket(this)">
+                        <span class="packet-id">PKT-004</span>
+                        <span class="packet-type">ACK</span>
+                        <span class="packet-size">32B</span>
+                    </div>
+                </div>
+                <div id="packet-details" class="packet-details">
+                    <p>Click a packet to analyze...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bandwidth-monitor">
+            <h3>BANDWIDTH UTILIZATION</h3>
+            <div class="bandwidth-bars">
+                <div class="bandwidth-bar">
+                    <span class="bar-label">ALPHA → BETA</span>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="width: 75%"></div>
+                    </div>
+                    <span class="bar-value">75%</span>
+                </div>
+                <div class="bandwidth-bar">
+                    <span class="bar-label">BETA → GAMMA</span>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="bar-value">0%</span>
+                </div>
+                <div class="bandwidth-bar">
+                    <span class="bar-label">DELTA → EPSILON</span>
+                    <div class="bar-container">
+                        <div class="bar-fill maintenance" style="width: 45%"></div>
+                    </div>
+                    <span class="bar-value">45%</span>
+                </div>
+                <div class="bandwidth-bar hidden-connection">
+                    <span class="bar-label">OMEGA → CORE</span>
+                    <div class="bar-container">
+                        <div class="bar-fill secure" style="width: 100%"></div>
+                    </div>
+                    <span class="bar-value">100%</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid-navigation">
+            <a href="index.html" class="grid-nav-btn">MAIN GRID</a>
+            <a href="protocol.html" class="grid-nav-btn">PROTOCOL LAYER</a>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable F12, Ctrl+Shift+I, Ctrl+U
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        const nodeData = {
+            alpha: {
+                name: 'ALPHA NODE',
+                status: 'ONLINE',
+                ip: '192.168.1.100',
+                load: '78%',
+                uptime: '15d 7h 23m',
+                connections: 4
+            },
+            beta: {
+                name: 'BETA NODE',
+                status: 'ONLINE',
+                ip: '192.168.1.101',
+                load: '45%',
+                uptime: '12d 15h 41m',
+                connections: 3
+            },
+            gamma: {
+                name: 'GAMMA NODE',
+                status: 'OFFLINE',
+                ip: '192.168.1.102',
+                load: '0%',
+                uptime: '0d 0h 0m',
+                connections: 0
+            },
+            delta: {
+                name: 'DELTA NODE',
+                status: 'ONLINE',
+                ip: '192.168.1.103',
+                load: '62%',
+                uptime: '8d 3h 17m',
+                connections: 2
+            },
+            epsilon: {
+                name: 'EPSILON NODE',
+                status: 'MAINTENANCE',
+                ip: '192.168.1.104',
+                load: '25%',
+                uptime: '2d 11h 5m',
+                connections: 1
+            },
+            omega: {
+                name: 'OMEGA NODE',
+                status: 'SECURE',
+                ip: '10.0.0.1',
+                load: '99%',
+                uptime: '365d 0h 0m',
+                connections: 1,
+                flag: 'CTF{omega_node_accessed}'
+            }
+        };
+        
+        function selectNode(nodeId) {
+            const node = nodeData[nodeId];
+            const infoDiv = document.getElementById('node-info');
+            
+            if (node) {
+                let html = `
+                    <div class="node-detail-item">
+                        <span class="detail-label">NAME:</span>
+                        <span class="detail-value">${node.name}</span>
+                    </div>
+                    <div class="node-detail-item">
+                        <span class="detail-label">STATUS:</span>
+                        <span class="detail-value ${node.status.toLowerCase()}">${node.status}</span>
+                    </div>
+                    <div class="node-detail-item">
+                        <span class="detail-label">IP ADDRESS:</span>
+                        <span class="detail-value">${node.ip}</span>
+                    </div>
+                    <div class="node-detail-item">
+                        <span class="detail-label">CPU LOAD:</span>
+                        <span class="detail-value">${node.load}</span>
+                    </div>
+                    <div class="node-detail-item">
+                        <span class="detail-label">UPTIME:</span>
+                        <span class="detail-value">${node.uptime}</span>
+                    </div>
+                    <div class="node-detail-item">
+                        <span class="detail-label">CONNECTIONS:</span>
+                        <span class="detail-value">${node.connections}</span>
+                    </div>
+                `;
+                
+                if (node.flag) {
+                    html += `
+                        <div class="node-detail-item flag-item">
+                            <span class="detail-label">SECURITY FLAG:</span>
+                            <span class="detail-value flag-value">${node.flag}</span>
+                        </div>
+                    `;
+                }
+                
+                infoDiv.innerHTML = html;
+                
+                // Highlight selected node
+                document.querySelectorAll('.network-node').forEach(n => n.classList.remove('selected'));
+                document.querySelector(`[data-node="${nodeId}"]`).classList.add('selected');
+                
+                // Reveal hidden elements for omega node
+                if (nodeId === 'omega') {
+                    document.querySelector('.hidden-connection').style.display = 'flex';
+                }
+            }
+        }
+        
+        function inspectPacket(packetElement) {
+            const detailsDiv = document.getElementById('packet-details');
+            const packetId = packetElement.querySelector('.packet-id').textContent;
+            const packetType = packetElement.querySelector('.packet-type').textContent;
+            const packetSize = packetElement.querySelector('.packet-size').textContent;
+            
+            let html = `
+                <div class="packet-info">
+                    <h4>PACKET ANALYSIS: ${packetId}</h4>
+                    <p><strong>Type:</strong> ${packetType}</p>
+                    <p><strong>Size:</strong> ${packetSize}</p>
+                    <p><strong>Timestamp:</strong> ${new Date().toLocaleTimeString()}</p>
+            `;
+            
+            if (packetElement.classList.contains('encrypted')) {
+                const hiddenPayload = packetElement.querySelector('.hidden-payload');
+                if (hiddenPayload) {
+                    html += `
+                        <p><strong>Encryption:</strong> AES-256</p>
+                        <p><strong>Decrypted Payload:</strong> <span class="flag-value">${hiddenPayload.textContent}</span></p>
+                    `;
+                }
+            } else {
+                html += `<p><strong>Payload:</strong> Standard network data</p>`;
+            }
+            
+            html += '</div>';
+            detailsDiv.innerHTML = html;
+            
+            // Highlight selected packet
+            document.querySelectorAll('.packet').forEach(p => p.classList.remove('selected'));
+            packetElement.classList.add('selected');
+        }
+        
+        // Animate connection lines
+        setInterval(() => {
+            const activeConnections = document.querySelectorAll('.connection.active');
+            activeConnections.forEach(connection => {
+                connection.style.strokeDashoffset = (parseInt(connection.style.strokeDashoffset) || 0) - 5;
+            });
+        }, 100);
+        
+        // Auto-reveal omega node after some interaction
+        let nodeClicks = 0;
+        document.querySelectorAll('.network-node:not(.hidden-node)').forEach(node => {
+            node.addEventListener('click', () => {
+                nodeClicks++;
+                if (nodeClicks >= 3) {
+                    document.querySelector('.hidden-node').style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

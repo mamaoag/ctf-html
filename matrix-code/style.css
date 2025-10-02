@@ -1,0 +1,603 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    font-family: 'Orbitron', monospace;
+    color: #00ff00;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(90deg, transparent 98%, #00ff00 100%),
+        linear-gradient(180deg, transparent 98%, #00ff00 100%);
+    background-size: 20px 20px;
+    opacity: 0.1;
+    z-index: -2;
+    animation: matrix-scroll 20s linear infinite;
+}
+
+@keyframes matrix-scroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(20px); }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+}
+
+.glitch {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    position: relative;
+    color: #00ff00;
+    text-shadow: 
+        0 0 10px #00ff00,
+        0 0 20px #00ff00,
+        0 0 40px #00ff00;
+    animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: #ff0000;
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: #0000ff;
+    z-index: -2;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-1 {
+    0%, 100% { transform: translate(0); }
+    10% { transform: translate(-2px, -2px); }
+    20% { transform: translate(2px, 2px); }
+    30% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { transform: translate(0); }
+    10% { transform: translate(2px, 2px); }
+    20% { transform: translate(-2px, -2px); }
+    30% { transform: translate(2px, -2px); }
+    40% { transform: translate(-2px, 2px); }
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #00ffff;
+    margin-top: 10px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.code-display {
+    background: rgba(0, 20, 0, 0.8);
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 30px 0;
+    font-family: 'Courier New', monospace;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 0, 0.3),
+        inset 0 0 20px rgba(0, 255, 0, 0.1);
+}
+
+.code-line {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    animation: typewriter 1s ease-in-out;
+}
+
+.hidden-flag {
+    opacity: 0.1;
+    font-size: 0.8rem;
+    transition: opacity 0.3s ease;
+}
+
+.hidden-flag:hover {
+    opacity: 1;
+}
+
+.line-number {
+    color: #ffff00;
+    margin-right: 15px;
+    font-weight: bold;
+    min-width: 40px;
+}
+
+.code {
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+.control-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.panel-section {
+    background: rgba(0, 50, 0, 0.6);
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+}
+
+.panel-section h3 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 15px;
+}
+
+.status-label {
+    min-width: 80px;
+    color: #ffff00;
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff00, #00ffff);
+    animation: pulse-bar 2s infinite;
+}
+
+@keyframes pulse-bar {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.node-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.node {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #00ff00;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.node.active {
+    background: #00ff00;
+    box-shadow: 0 0 15px #00ff00;
+    animation: node-pulse 1.5s infinite;
+}
+
+@keyframes node-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px 0;
+}
+
+.footer p {
+    margin: 10px 0;
+    color: #ff0000;
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .glitch {
+        font-size: 2rem;
+    }
+    
+    .control-panel {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+}.nav
+igation {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.nav-link {
+    color: #00ffff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border: 2px solid #00ffff;
+    border-radius: 5px;
+    background: rgba(0, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.nav-link:hover {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 20px #00ffff;
+    transform: translateY(-2px);
+}
+
+.secret-text {
+    color: #000;
+    background: #000;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.secret-text:hover {
+    color: #00ff00;
+    background: transparent;
+}
+
+.clickable-element {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clickable-element:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px currentColor;
+}
+
+.hidden-content {
+    display: none;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.hidden-content.show {
+    display: block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}/
+* Neural Interface Styles */
+.neural-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.brain-scan, .memory-banks {
+    background: rgba(0, 50, 0, 0.6);
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+}
+
+.brain-scan h3, .memory-banks h3 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.scan-lines {
+    height: 100px;
+    position: relative;
+    margin: 20px 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00ff00;
+}
+
+.scan-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #00ff00;
+    animation: scan 2s infinite;
+}
+
+@keyframes scan {
+    0% { top: 0; opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+.neural-data {
+    margin: 8px 0;
+    font-size: 0.9rem;
+}
+
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.memory-cell {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00ff00;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.memory-cell:hover {
+    background: rgba(0, 255, 0, 0.2);
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.memory-cell.active {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 5px #00ff00;
+}
+
+.memory-cell.accessed {
+    background: #00ff00;
+    color: #000;
+}
+
+.memory-output {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #00ffff;
+    min-height: 60px;
+}
+
+.memory-text {
+    color: #00ffff;
+    font-family: 'Courier New', monospace;
+}
+
+.flag-found {
+    color: #ffff00;
+    font-weight: bold;
+    text-shadow: 0 0 10px #ffff00;
+    animation: pulse 1s infinite;
+}
+
+/* Quantum Core Styles */
+.quantum-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.particle-chamber, .probability-matrix {
+    background: rgba(0, 0, 50, 0.6);
+    border: 1px solid #00ffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+.particle-chamber h3, .probability-matrix h3 {
+    color: #00ffff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.particles {
+    position: relative;
+    height: 120px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #00ffff;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #00ffff;
+    border-radius: 50%;
+    animation: particle-move var(--duration, 3s) infinite linear;
+    animation-delay: var(--delay, 0s);
+    box-shadow: 0 0 10px #00ffff;
+}
+
+@keyframes particle-move {
+    0% { 
+        left: 0; 
+        top: 50%; 
+        transform: translateY(-50%);
+    }
+    25% { 
+        left: 25%; 
+        top: 20%; 
+    }
+    50% { 
+        left: 50%; 
+        top: 80%; 
+    }
+    75% { 
+        left: 75%; 
+        top: 30%; 
+    }
+    100% { 
+        left: 100%; 
+        top: 50%; 
+        transform: translateY(-50%);
+    }
+}
+
+.quantum-equation {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.quantum-equation p {
+    margin: 10px 0;
+    color: #00ffff;
+    font-family: 'Courier New', monospace;
+}
+
+.matrix-grid {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.matrix-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 8px 0;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.hidden-flag-row {
+    opacity: 0.1;
+    transition: opacity 0.3s ease;
+}
+
+.hidden-flag-row:hover {
+    opacity: 1;
+    background: rgba(255, 255, 0, 0.1);
+}
+
+.quantum-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.quantum-btn {
+    background: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 10px 20px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.quantum-btn:hover {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 20px #00ffff;
+}
+
+.quantum-output {
+    background: rgba(0, 50, 50, 0.6);
+    border: 1px solid #00ffff;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    min-height: 60px;
+}
+
+.quantum-result {
+    color: #00ffff;
+    font-family: 'Courier New', monospace;
+    margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .neural-display, .quantum-display {
+        grid-template-columns: 1fr;
+    }
+    
+    .memory-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .quantum-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+}

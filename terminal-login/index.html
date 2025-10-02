@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL ACCESS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="terminal-title">SECURE TERMINAL v2.1</span>
+            <div class="terminal-controls">
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
+                <span class="control close"></span>
+            </div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="boot-sequence">
+                <p>SYSTEM BOOT INITIATED...</p>
+                <p>LOADING SECURITY PROTOCOLS...</p>
+                <p>ESTABLISHING CONNECTION...</p>
+                <p class="success">CONNECTION ESTABLISHED</p>
+            </div>
+            
+            <!-- CTF{welcome_to_the_matrix} -->
+            
+            <div class="login-form">
+                <p class="prompt">root@hackbox:~$ login</p>
+                <form>
+                    <div class="input-group">
+                        <label>USERNAME:</label>
+                        <input type="text" placeholder="Enter username">
+                    </div>
+                    <div class="input-group">
+                        <label>PASSWORD:</label>
+                        <input type="password" placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="login-btn">ACCESS SYSTEM</button>
+                </form>
+            </div>
+            
+            <div class="footer-text">
+                <p>UNAUTHORIZED ACCESS PROHIBITED</p>
+                <p>ALL ACTIVITIES ARE MONITORED</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Terminal login functionality (right-click enabled for easier difficulty)
+    </script>
+</body>
+</html>

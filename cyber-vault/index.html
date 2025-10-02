@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER VAULT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="vault-container">
+        <div class="vault-header">
+            <h1 class="vault-title">CYBER VAULT</h1>
+            <p class="vault-subtitle">SECURE DATA REPOSITORY</p>
+        </div>
+
+        <div class="vault-interface">
+            <div class="security-panel">
+                <h2>SECURITY CLEARANCE</h2>
+                <div class="clearance-levels">
+                    <div class="level level-1 active">LEVEL 1: PUBLIC</div>
+                    <div class="level level-2">LEVEL 2: RESTRICTED</div>
+                    <div class="level level-3">LEVEL 3: CLASSIFIED</div>
+                    <div class="level level-4">LEVEL 4: TOP SECRET</div>
+                </div>
+            </div>
+
+            <div class="file-system">
+                <h2>FILE DIRECTORY</h2>
+                <div class="file-tree">
+                    <div class="folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="folder-name">public_files</span>
+                        <div class="file-list">
+                            <div class="file">📄 readme.txt</div>
+                            <div class="file">📄 welcome.log</div>
+                        </div>
+                    </div>
+                    <div class="folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="folder-name">restricted_access</span>
+                        <div class="file-list">
+                            <div class="file locked">🔒 classified.dat</div>
+                            <div class="file locked">🔒 secrets.enc</div>
+                        </div>
+                    </div>
+                    <div class="folder hidden-folder">
+                        <span class="folder-icon">📁</span>
+                        <span class="folder-name">.hidden_vault</span>
+                        <div class="file-list">
+                            <div class="file secret-file">🔑 flag.txt</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="access-terminal">
+            <div class="terminal-screen">
+                <div class="terminal-line">$ vault --status</div>
+                <div class="terminal-line">VAULT STATUS: ONLINE</div>
+                <div class="terminal-line">ENCRYPTION: AES-256</div>
+                <div class="terminal-line">LAST ACCESS: 2024-10-02 14:32:15</div>
+                <div class="terminal-line">$ ls -la /vault/.hidden_vault/</div>
+                <div class="terminal-line">-rw------- 1 root root 42 Oct 2 14:30 flag.txt</div>
+                <div class="terminal-line">$ cat /vault/.hidden_vault/flag.txt</div>
+                <div class="terminal-line flag-content">CTF{vault_secrets_revealed}</div>
+                <div class="terminal-line">$ _</div>
+            </div>
+        </div>
+
+        <div class="vault-navigation">
+            <a href="security.html" class="vault-nav-btn">SECURITY LAYER</a>
+            <a href="database.html" class="vault-nav-btn">DATABASE ACCESS</a>
+        </div>
+
+        <div class="navigation">
+            <a href="../terminal-login/index.html" class="nav-btn">Terminal Login</a>
+            <a href="../matrix-code/index.html" class="nav-btn">Matrix Code</a>
+            <a href="../neon-grid/index.html" class="nav-btn">Neon Grid</a>
+            <a href="../hacker-console/index.html" class="nav-btn">Hacker Console</a>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable developer tools
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Interactive folder clicking
+        document.querySelectorAll('.folder').forEach(folder => {
+            folder.addEventListener('click', function () {
+                this.classList.toggle('expanded');
+            });
+        });
+
+        // Security level animation
+        let currentLevel = 1;
+        setInterval(() => {
+            document.querySelectorAll('.level').forEach(level => level.classList.remove('active'));
+            document.querySelector(`.level-${currentLevel}`).classList.add('active');
+            currentLevel = currentLevel === 4 ? 1 : currentLevel + 1;
+        }, 2000);
+    </script>
+</body>
+
+</html>

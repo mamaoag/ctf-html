@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATABASE ACCESS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="vault-container">
+        <div class="vault-header">
+            <h1 class="vault-title">DATABASE ACCESS</h1>
+            <p class="vault-subtitle">CLASSIFIED DATA REPOSITORY</p>
+        </div>
+
+        <div class="database-interface">
+            <div class="query-panel">
+                <h2>SQL QUERY INTERFACE</h2>
+                <div class="query-input">
+                    <textarea id="sql-query"
+                        placeholder="Enter SQL query...">SELECT * FROM users WHERE clearance_level >= 4;</textarea>
+                    <button onclick="executeQuery()" class="execute-btn">EXECUTE QUERY</button>
+                </div>
+            </div>
+
+            <div class="results-panel">
+                <h2>QUERY RESULTS</h2>
+                <div id="query-results" class="results-table">
+                    <p>No query executed yet...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="database-schema">
+            <h2>DATABASE SCHEMA</h2>
+            <div class="schema-tables">
+                <div class="table-info">
+                    <h3>USERS</h3>
+                    <ul>
+                        <li>id (INT)</li>
+                        <li>username (VARCHAR)</li>
+                        <li>clearance_level (INT)</li>
+                        <li>department (VARCHAR)</li>
+                    </ul>
+                </div>
+                <div class="table-info">
+                    <h3>SECRETS</h3>
+                    <ul>
+                        <li>id (INT)</li>
+                        <li>classification (VARCHAR)</li>
+                        <li>content (TEXT)</li>
+                        <li>access_level (INT)</li>
+                    </ul>
+                </div>
+                <div class="table-info hidden-table">
+                    <h3>FLAGS</h3>
+                    <ul>
+                        <li>challenge_id (INT)</li>
+                        <li>flag_value (VARCHAR)</li>
+                        <li>hint (TEXT)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="connection-status">
+            <div class="status-indicator">
+                <span class="status-dot active"></span>
+                <span>DATABASE CONNECTED</span>
+            </div>
+            <div class="server-info">
+                <p>Server: vault-db-01.cyber.local</p>
+                <p>Port: 5432</p>
+                <p>Database: classified_vault</p>
+            </div>
+        </div>
+
+        <div class="vault-navigation">
+            <a href="index.html" class="vault-nav-btn">MAIN VAULT</a>
+            <a href="security.html" class="vault-nav-btn">SECURITY LAYER</a>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        const sampleData = {
+            users: [
+                { id: 1, username: 'admin', clearance_level: 5, department: 'SECURITY' },
+                { id: 2, username: 'analyst', clearance_level: 3, department: 'INTELLIGENCE' },
+                { id: 3, username: 'operator', clearance_level: 2, department: 'OPERATIONS' }
+            ],
+            secrets: [
+                { id: 1, classification: 'TOP_SECRET', content: 'Project Blackout Details', access_level: 5 },
+                { id: 2, classification: 'CLASSIFIED', content: 'Agent Contact List', access_level: 4 },
+                { id: 3, classification: 'RESTRICTED', content: 'Security Protocols', access_level: 3 }
+            ],
+            flags: [
+                { challenge_id: 1, flag_value: 'CTF{database_infiltration_complete}', hint: 'Query the hidden table' }
+            ]
+        };
+
+        function executeQuery() {
+            const query = document.getElementById('sql-query').value.toLowerCase();
+            const resultsDiv = document.getElementById('query-results');
+
+            if (query.includes('select') && query.includes('users')) {
+                displayTable(sampleData.users, ['id', 'username', 'clearance_level', 'department']);
+            } else if (query.includes('select') && query.includes('secrets')) {
+                displayTable(sampleData.secrets, ['id', 'classification', 'content', 'access_level']);
+            } else if (query.includes('select') && query.includes('flags')) {
+                displayTable(sampleData.flags, ['challenge_id', 'flag_value', 'hint']);
+                // Reveal hidden table in schema
+                document.querySelector('.hidden-table').style.display = 'block';
+            } else if (query.includes('show tables') || query.includes('show databases')) {
+                resultsDiv.innerHTML = `
+                    <div class="table-list">
+                        <p>Available tables:</p>
+                        <ul>
+                            <li>users</li>
+                            <li>secrets</li>
+                            <li class="secret-table-name">flags</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                resultsDiv.innerHTML = '<p class="error">Invalid query or insufficient permissions</p>';
+            }
+        }
+
+        function displayTable(data, columns) {
+            const resultsDiv = document.getElementById('query-results');
+            let html = '<table class="data-table"><thead><tr>';
+
+            columns.forEach(col => {
+                html += `<th>${col.toUpperCase()}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            data.forEach(row => {
+                html += '<tr>';
+                columns.forEach(col => {
+                    html += `<td>${row[col]}</td>`;
+                });
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            resultsDiv.innerHTML = html;
+        }
+
+        // Auto-suggest queries
+        const commonQueries = [
+            'SELECT * FROM users;',
+            'SELECT * FROM secrets WHERE access_level >= 4;',
+            'SHOW TABLES;',
+            'SELECT * FROM flags;'
+        ];
+
+        document.getElementById('sql-query').addEventListener('focus', function () {
+            if (this.value === this.getAttribute('placeholder')) {
+                this.value = commonQueries[Math.floor(Math.random() * commonQueries.length)];
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURAL INTERFACE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="glitch" data-text="NEURAL INTERFACE">NEURAL INTERFACE</h1>
+            <p class="subtitle">SYNAPTIC CONNECTIONS ACTIVE</p>
+        </div>
+        
+        <div class="neural-display">
+            <div class="brain-scan">
+                <h3>BRAIN ACTIVITY MONITOR</h3>
+                <div class="scan-lines">
+                    <div class="scan-line" style="animation-delay: 0s;"></div>
+                    <div class="scan-line" style="animation-delay: 0.5s;"></div>
+                    <div class="scan-line" style="animation-delay: 1s;"></div>
+                    <div class="scan-line" style="animation-delay: 1.5s;"></div>
+                </div>
+                <p class="neural-data">THETA WAVES: 7.5 Hz</p>
+                <p class="neural-data">ALPHA WAVES: 10.2 Hz</p>
+                <p class="neural-data secret-text">FLAG2: CTF{neural_pathways_unlocked}</p>
+                <p class="neural-data">BETA WAVES: 15.8 Hz</p>
+            </div>
+            
+            <div class="memory-banks">
+                <h3>MEMORY RECONSTRUCTION</h3>
+                <div class="memory-grid">
+                    <div class="memory-cell active" onclick="revealMemory(this)">M001</div>
+                    <div class="memory-cell" onclick="revealMemory(this)">M002</div>
+                    <div class="memory-cell active" onclick="revealMemory(this)">M003</div>
+                    <div class="memory-cell" onclick="revealMemory(this)">M004</div>
+                    <div class="memory-cell active" onclick="revealMemory(this)">M005</div>
+                    <div class="memory-cell" onclick="revealMemory(this)">M006</div>
+                </div>
+                <div id="memory-output" class="memory-output">
+                    <p>Click memory cells to access stored data...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="index.html" class="nav-link">MAIN MATRIX</a>
+            <a href="quantum.html" class="nav-link">QUANTUM CORE</a>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        const memories = [
+            "ACCESSING MEMORY BANK 001...",
+            "CORRUPTED DATA FRAGMENT",
+            "CTF{memories_are_just_data}",
+            "NEURAL PATHWAY BLOCKED",
+            "SYNAPTIC BRIDGE ESTABLISHED",
+            "MEMORY RECONSTRUCTION FAILED"
+        ];
+        
+        function revealMemory(cell) {
+            const index = Array.from(cell.parentNode.children).indexOf(cell);
+            const output = document.getElementById('memory-output');
+            
+            cell.classList.add('accessed');
+            output.innerHTML = `<p class="memory-text">${memories[index]}</p>`;
+            
+            if (memories[index].includes('CTF{')) {
+                output.innerHTML += '<p class="flag-found">FLAG DISCOVERED!</p>';
+            }
+        }
+    </script>
+</body>
+</html>

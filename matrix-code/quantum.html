@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUANTUM CORE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="glitch" data-text="QUANTUM CORE">QUANTUM CORE</h1>
+            <p class="subtitle">PROBABILITY MATRICES CALCULATING</p>
+        </div>
+        
+        <div class="quantum-display">
+            <div class="particle-chamber">
+                <h3>QUANTUM PARTICLE SIMULATION</h3>
+                <div class="particles">
+                    <div class="particle" style="--delay: 0s; --duration: 3s;"></div>
+                    <div class="particle" style="--delay: 0.5s; --duration: 2.5s;"></div>
+                    <div class="particle" style="--delay: 1s; --duration: 4s;"></div>
+                    <div class="particle" style="--delay: 1.5s; --duration: 3.5s;"></div>
+                </div>
+                <div class="quantum-equation">
+                    <p>ψ(x,t) = Ae^(i(kx-ωt))</p>
+                    <p class="clickable-element" onclick="toggleQuantumState()">
+                        SUPERPOSITION STATE: <span id="quantum-state">COLLAPSED</span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="probability-matrix">
+                <h3>PROBABILITY CALCULATIONS</h3>
+                <div class="matrix-grid">
+                    <div class="matrix-row">
+                        <span>|0⟩</span><span>0.707</span><span>0.000</span><span>0.707</span>
+                    </div>
+                    <div class="matrix-row">
+                        <span>|1⟩</span><span>0.000</span><span>1.000</span><span>0.000</span>
+                    </div>
+                    <div class="matrix-row hidden-flag-row">
+                        <span>|ψ⟩</span><span>CTF{</span><span>quantum_</span><span>entangled}</span>
+                    </div>
+                    <div class="matrix-row">
+                        <span>|+⟩</span><span>0.500</span><span>0.500</span><span>0.500</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quantum-controls">
+            <button class="quantum-btn" onclick="measureQuantumState()">MEASURE STATE</button>
+            <button class="quantum-btn" onclick="entangleParticles()">ENTANGLE PARTICLES</button>
+            <button class="quantum-btn" onclick="collapseWaveFunction()">COLLAPSE WAVE</button>
+        </div>
+        
+        <div id="quantum-output" class="quantum-output">
+            <p>Quantum system ready for measurement...</p>
+        </div>
+        
+        <div class="navigation">
+            <a href="index.html" class="nav-link">MAIN MATRIX</a>
+            <a href="neural.html" class="nav-link">NEURAL INTERFACE</a>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        let quantumSuperposition = false;
+        let measurementCount = 0;
+        
+        function toggleQuantumState() {
+            const stateElement = document.getElementById('quantum-state');
+            quantumSuperposition = !quantumSuperposition;
+            
+            if (quantumSuperposition) {
+                stateElement.textContent = 'SUPERPOSITION';
+                stateElement.style.color = '#00ffff';
+            } else {
+                stateElement.textContent = 'COLLAPSED';
+                stateElement.style.color = '#ff0000';
+            }
+        }
+        
+        function measureQuantumState() {
+            measurementCount++;
+            const output = document.getElementById('quantum-output');
+            
+            if (measurementCount === 3 && quantumSuperposition) {
+                output.innerHTML = '<p class="quantum-result">QUANTUM MEASUREMENT COMPLETE</p><p class="flag-found">FLAG: CTF{observer_effect_confirmed}</p>';
+            } else {
+                const states = ['|0⟩', '|1⟩', '|+⟩', '|-⟩'];
+                const randomState = states[Math.floor(Math.random() * states.length)];
+                output.innerHTML = `<p class="quantum-result">Measured state: ${randomState}</p>`;
+            }
+        }
+        
+        function entangleParticles() {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                particle.style.animationDuration = '1s';
+                particle.style.background = '#ff00ff';
+            });
+            
+            const output = document.getElementById('quantum-output');
+            output.innerHTML = '<p class="quantum-result">Particles entangled successfully</p>';
+        }
+        
+        function collapseWaveFunction() {
+            const output = document.getElementById('quantum-output');
+            output.innerHTML = '<p class="quantum-result">Wave function collapsed - Reality stabilized</p>';
+        }
+    </script>
+</body>
+</html>

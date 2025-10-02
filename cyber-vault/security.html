@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURITY LAYER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="vault-container">
+        <div class="vault-header">
+            <h1 class="vault-title">SECURITY LAYER</h1>
+            <p class="vault-subtitle">BIOMETRIC AUTHENTICATION</p>
+        </div>
+        
+        <div class="security-interface">
+            <div class="biometric-scanner">
+                <h2>RETINAL SCANNER</h2>
+                <div class="scanner-display">
+                    <div class="scan-area">
+                        <div class="crosshair"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                    <div class="scan-results">
+                        <p id="scan-status">PLACE EYE FOR SCANNING</p>
+                    </div>
+                </div>
+                <button class="scan-btn" onclick="performScan()">INITIATE SCAN</button>
+            </div>
+            
+            <div class="fingerprint-panel">
+                <h2>FINGERPRINT ANALYSIS</h2>
+                <div class="fingerprint-scanner">
+                    <div class="fingerprint-area" onclick="scanFingerprint()">
+                        <div class="fingerprint-pattern"></div>
+                        <p>PLACE FINGER HERE</p>
+                    </div>
+                </div>
+                <div class="fingerprint-results">
+                    <div class="result-item">
+                        <span>RIDGE COUNT:</span>
+                        <span id="ridge-count">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span>PATTERN TYPE:</span>
+                        <span id="pattern-type">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span>MATCH CONFIDENCE:</span>
+                        <span id="match-confidence">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="security-logs">
+            <h2>SECURITY EVENT LOG</h2>
+            <div class="log-entries">
+                <div class="log-entry">
+                    <span class="timestamp">2024-10-02 14:30:15</span>
+                    <span class="event">VAULT ACCESS GRANTED</span>
+                    <span class="user">ADMIN</span>
+                </div>
+                <div class="log-entry">
+                    <span class="timestamp">2024-10-02 14:25:42</span>
+                    <span class="event">BIOMETRIC SCAN FAILED</span>
+                    <span class="user">UNKNOWN</span>
+                </div>
+                <div class="log-entry hidden-log">
+                    <span class="timestamp">2024-10-02 14:20:33</span>
+                    <span class="event">FLAG_DISCOVERED: CTF{biometric_bypass_successful}</span>
+                    <span class="user">SYSTEM</span>
+                </div>
+                <div class="log-entry">
+                    <span class="timestamp">2024-10-02 14:15:18</span>
+                    <span class="event">SECURITY PROTOCOL UPDATED</span>
+                    <span class="user">ADMIN</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="vault-navigation">
+            <a href="index.html" class="vault-nav-btn">MAIN VAULT</a>
+            <a href="database.html" class="vault-nav-btn">DATABASE ACCESS</a>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        let scanAttempts = 0;
+        
+        function performScan() {
+            const statusElement = document.getElementById('scan-status');
+            const scanLine = document.querySelector('.scan-line');
+            
+            scanLine.style.animation = 'scan-sweep 2s ease-in-out';
+            statusElement.textContent = 'SCANNING IN PROGRESS...';
+            
+            setTimeout(() => {
+                scanAttempts++;
+                if (scanAttempts >= 3) {
+                    statusElement.textContent = 'SCAN COMPLETE - AUTHORIZED USER DETECTED';
+                    statusElement.style.color = '#00ff00';
+                } else {
+                    statusElement.textContent = 'SCAN FAILED - TRY AGAIN';
+                    statusElement.style.color = '#ff0000';
+                }
+                scanLine.style.animation = '';
+            }, 2000);
+        }
+        
+        function scanFingerprint() {
+            const ridgeCount = document.getElementById('ridge-count');
+            const patternType = document.getElementById('pattern-type');
+            const matchConfidence = document.getElementById('match-confidence');
+            
+            // Simulate fingerprint analysis
+            setTimeout(() => {
+                ridgeCount.textContent = '127';
+                patternType.textContent = 'WHORL';
+                matchConfidence.textContent = '98.7%';
+            }, 1500);
+        }
+        
+        // Reveal hidden log on double-click
+        document.querySelector('.security-logs').addEventListener('dblclick', function() {
+            document.querySelector('.hidden-log').style.display = 'flex';
+        });
+    </script>
+</body>
+</html>

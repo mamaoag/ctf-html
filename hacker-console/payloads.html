@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--
+EDUCATIONAL CTF CHALLENGE - SIMULATED PAYLOADS
+This is a Capture The Flag (CTF) cybersecurity training exercise.
+All payload code is simulated and non-functional.
+For educational purposes only.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAYLOAD GENERATOR - CTF CHALLENGE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="console-container">
+        <div class="console-header">
+            <div class="header-left">
+                <span class="console-title">PAYLOAD GENERATOR</span>
+                <span class="connection-status">READY</span>
+            </div>
+            <div class="header-right">
+                <span class="timestamp" id="timestamp"></span>
+                <div class="system-load">
+                    <span>PAYLOADS: <span id="payload-count">512</span></span>
+                    <span>ENCODERS: <span id="encoder-count">64</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-interface">
+            <div class="video-selector">
+                <h3>CYBERSECURITY TRAINING VIDEOS</h3>
+                <div class="video-list">
+                    <div class="video-item" onclick="loadVideo('intro')">
+                        <div class="video-thumbnail">📹</div>
+                        <div class="video-info">
+                            <h4>Introduction to Ethical Hacking</h4>
+                            <p>Learn the basics of cybersecurity and ethical hacking principles</p>
+                            <span class="video-duration">15:30</span>
+                        </div>
+                    </div>
+
+                    <div class="video-item" onclick="loadVideo('network')">
+                        <div class="video-thumbnail">🌐</div>
+                        <div class="video-info">
+                            <h4>Network Security Fundamentals</h4>
+                            <p>Understanding network protocols and security measures</p>
+                            <span class="video-duration">22:45</span>
+                        </div>
+                    </div>
+
+                    <div class="video-item" onclick="loadVideo('web')">
+                        <div class="video-thumbnail">🔒</div>
+                        <div class="video-info">
+                            <h4>Web Application Security</h4>
+                            <p>Common web vulnerabilities and how to prevent them</p>
+                            <span class="video-duration">18:20</span>
+                        </div>
+                    </div>
+
+                    <div class="video-item hidden-video" onclick="loadVideo('ctf')">
+                        <div class="video-thumbnail">🏆</div>
+                        <div class="video-info">
+                            <h4>CTF Challenge Solutions</h4>
+                            <p>Advanced techniques for Capture The Flag competitions</p>
+                            <span class="video-duration">25:10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-player">
+                <h3>VIDEO PLAYER</h3>
+                <div class="player-container" id="player-container">
+                    <div class="placeholder-screen">
+                        <div class="play-icon">▶</div>
+                        <p>Select a video from the list to start learning</p>
+                    </div>
+                </div>
+                <div class="video-controls">
+                    <button onclick="playPause()" class="control-btn" id="play-btn">PLAY</button>
+                    <button onclick="stopVideo()" class="control-btn">STOP</button>
+                    <button onclick="fullscreen()" class="control-btn">FULLSCREEN</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flag-section" id="flag-section" style="display: none;">
+            <h3>CTF FLAG DISCOVERED</h3>
+            <p class="flag-value">CTF{payload_generator_mastered}</p>
+        </div>
+
+        <div class="console-navigation">
+            <a href="index.html" class="console-nav-btn">MAIN CONSOLE</a>
+            <a href="exploits.html" class="console-nav-btn">EXPLOIT DATABASE</a>
+        </div>
+    </div>
+
+    <script>
+        let currentVideo = null;
+        let isPlaying = false;
+
+        const videoData = {
+            intro: {
+                title: 'Introduction to Ethical Hacking',
+                description: 'This educational video covers the fundamentals of ethical hacking and cybersecurity principles.',
+                content: 'Video content would be loaded here in a real implementation. This is a CTF simulation.'
+            },
+            network: {
+                title: 'Network Security Fundamentals',
+                description: 'Learn about network protocols, security measures, and common attack vectors.',
+                content: 'Video content would be loaded here in a real implementation. This is a CTF simulation.'
+            },
+            web: {
+                title: 'Web Application Security',
+                description: 'Understanding web vulnerabilities like XSS, SQL injection, and CSRF attacks.',
+                content: 'Video content would be loaded here in a real implementation. This is a CTF simulation.'
+            },
+            ctf: {
+                title: 'CTF Challenge Solutions',
+                description: 'Advanced techniques and methodologies for solving Capture The Flag challenges.',
+                content: 'Video content would be loaded here. Hidden flag: CTF{payload_generator_mastered}',
+                flag: 'CTF{payload_generator_mastered}'
+            }
+        };
+
+        function loadVideo(videoId) {
+            const video = videoData[videoId];
+            const playerContainer = document.getElementById('player-container');
+
+            if (!video) {
+                showNotification('Video not found!');
+                return;
+            }
+
+            currentVideo = videoId;
+
+            playerContainer.innerHTML = `
+                <div class="video-content">
+                    <div class="video-header">
+                        <h4>${video.title}</h4>
+                        <p class="video-description">${video.description}</p>
+                    </div>
+                    <div class="video-screen">
+                        <div class="simulated-video">
+                            <div class="video-placeholder">
+                                <div class="play-button" onclick="playPause()">▶</div>
+                                <p>📹 Educational Video Simulation</p>
+                                <div class="progress-bar">
+                                    <div class="progress" id="video-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <p>${video.content}</p>
+                    </div>
+                </div>
+            `;
+
+            // Show flag if it's the CTF video
+            if (video.flag) {
+                document.getElementById('flag-section').style.display = 'block';
+            }
+
+            // Reveal hidden video after loading any video
+            document.querySelector('.hidden-video').style.display = 'block';
+
+            showNotification(`Loaded: ${video.title}`);
+        }
+
+        function playPause() {
+            const playBtn = document.getElementById('play-btn');
+            const progress = document.getElementById('video-progress');
+
+            if (!currentVideo) {
+                showNotification('Please select a video first!');
+                return;
+            }
+
+            isPlaying = !isPlaying;
+
+            if (isPlaying) {
+                playBtn.textContent = 'PAUSE';
+                simulateVideoProgress();
+                showNotification('Video playing...');
+            } else {
+                playBtn.textContent = 'PLAY';
+                showNotification('Video paused');
+            }
+        }
+
+        function stopVideo() {
+            isPlaying = false;
+            const playBtn = document.getElementById('play-btn');
+            const progress = document.getElementById('video-progress');
+
+            if (playBtn) playBtn.textContent = 'PLAY';
+            if (progress) progress.style.width = '0%';
+
+            showNotification('Video stopped');
+        }
+
+        function fullscreen() {
+            showNotification('Fullscreen mode activated (simulated)');
+        }
+
+        function simulateVideoProgress() {
+            const progress = document.getElementById('video-progress');
+            if (!progress || !isPlaying) return;
+
+            let width = 0;
+            const interval = setInterval(() => {
+                if (!isPlaying) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                width += 0.5;
+                progress.style.width = width + '%';
+
+                if (width >= 100) {
+                    clearInterval(interval);
+                    isPlaying = false;
+                    document.getElementById('play-btn').textContent = 'PLAY';
+                    showNotification('Video completed!');
+                }
+            }, 100);
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #00ff00;
+                color: #000;
+                padding: 10px 20px;
+                border-radius: 5px;
+                z-index: 1000;
+                font-weight: bold;
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Update timestamp
+        function updateStats() {
+            document.getElementById('timestamp').textContent = new Date().toLocaleTimeString();
+
+            // Update video count
+            const videoCount = document.getElementById('payload-count');
+            if (videoCount) {
+                videoCount.textContent = Object.keys(videoData).length;
+            }
+        }
+
+        setInterval(updateStats, 1000);
+        updateStats();
+
+        // Auto-reveal hidden video after some time
+        setTimeout(() => {
+            document.querySelector('.hidden-video').style.display = 'block';
+        }, 15000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    font-family: 'Courier Prime', monospace;
+    color: #00ff00;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: 
+        radial-gradient(circle at 25% 25%, #003300 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, #001100 0%, transparent 50%);
+}
+
+.terminal {
+    width: 800px;
+    max-width: 90vw;
+    background: #111;
+    border: 2px solid #00ff00;
+    border-radius: 8px;
+    box-shadow: 
+        0 0 20px #00ff00,
+        inset 0 0 20px rgba(0, 255, 0, 0.1);
+    animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+    0% { box-shadow: 0 0 20px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.1); }
+    100% { box-shadow: 0 0 30px #00ff00, inset 0 0 30px rgba(0, 255, 0, 0.2); }
+}
+
+.terminal-header {
+    background: #222;
+    padding: 10px 15px;
+    border-bottom: 1px solid #00ff00;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.terminal-title {
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #00ff00;
+}
+
+.minimize { background: #ffff00; }
+.maximize { background: #00ff00; }
+.close { background: #ff0000; }
+
+.terminal-body {
+    padding: 20px;
+    min-height: 400px;
+}
+
+.boot-sequence p {
+    margin: 5px 0;
+    animation: typewriter 0.5s steps(40) forwards;
+    opacity: 0;
+}
+
+.boot-sequence p:nth-child(1) { animation-delay: 0.5s; }
+.boot-sequence p:nth-child(2) { animation-delay: 1s; }
+.boot-sequence p:nth-child(3) { animation-delay: 1.5s; }
+.boot-sequence p:nth-child(4) { animation-delay: 2s; }
+
+@keyframes typewriter {
+    to { opacity: 1; }
+}
+
+.success {
+    color: #00ff00 !important;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.login-form {
+    margin-top: 30px;
+    animation: fadeIn 1s ease-in 2.5s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.prompt {
+    margin-bottom: 20px;
+    color: #00ffff;
+    text-shadow: 0 0 5px #00ffff;
+}
+
+.input-group {
+    margin: 15px 0;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ffff00;
+}
+
+.input-group input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.input-group input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.login-btn {
+    background: transparent;
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #00ff00;
+    color: #000;
+    box-shadow: 0 0 20px #00ff00;
+}
+
+.footer-text {
+    margin-top: 40px;
+    text-align: center;
+    color: #ff0000;
+    font-size: 12px;
+}
+
+.footer-text p {
+    margin: 5px 0;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
